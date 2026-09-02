@@ -1,0 +1,6 @@
+(function(){(()=>{let e=1e4,t=document.currentScript;if(!t){console.warn(`[cruclub-widget] Не удалось определить свой <script> тег.`);return}let n=t.dataset.container,{publicKey:r}=t.dataset;if(!n){console.warn(`[cruclub-widget] Атрибут data-container не задан.`);return}let i=new URL(t.src,window.location.href).origin,a=new URL(`./index.html`,t.src);r&&a.searchParams.set(`publicKey`,r);let o=e=>{let t=document.createElement(`iframe`);t.src=a.toString(),t.title=`Поиск круизов`,t.setAttribute(`loading`,`lazy`),t.style.cssText=`
+      display: block;
+      width: 100%;
+      border: 0;
+      height: 600px;
+    `,e.innerHTML=``,e.appendChild(t),window.addEventListener(`message`,e=>{if(e.origin!==i||e.source!==t.contentWindow)return;if(e.data?.type===`cruclub-widget-scroll-top`){t.scrollIntoView({behavior:`smooth`,block:`start`});return}if(e.data?.type!==`cruclub-widget-height`)return;let n=Number(e.data.height);!Number.isFinite(n)||n<0||(t.style.height=`${Math.ceil(n)}px`)})},s=document.querySelector(n);if(s){o(s);return}let c=new MutationObserver(()=>{let e=document.querySelector(n);e&&(c.disconnect(),clearTimeout(l),o(e))});c.observe(document.documentElement,{childList:!0,subtree:!0});let l=window.setTimeout(()=>{c.disconnect(),console.warn(`[cruclub-widget] Контейнер "${n}" не появился на странице за ${e} мс.`)},e)})()})();
